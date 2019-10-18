@@ -1,8 +1,6 @@
 package JDBC;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Scanner;
 
 import controller.MetodeJDBC;
 
@@ -10,20 +8,18 @@ public class JdbcProject {
 
 	public static void main(String[] args) {
 		
-		Connection konekcija=null;
-		Statement statement=null;
+		MetodeJDBC metode=new MetodeJDBC();
 		
-		try {
-			konekcija=MetodeJDBC.uspostavikonekciju("kursevi");
-			System.out.println("Uspostavili ste konekciju sa bazom");
-			
-			String query="INSERT INTO courses VALUES(null,'c#',10000)";
-			statement=konekcija.createStatement();
-			statement.execute(query);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.err.println("Došlo je do greške. Nije uspostavljena konekcija sa bazom");;
-		}
+		Scanner scanner=new Scanner(System.in);
+		
+		System.out.println("Unesite ime kursa: ");
+		String imeKursa=scanner.nextLine();
+		
+		System.out.println("Unesite cenu kursa: ");
+		String cena=scanner.nextLine();
+		
+		scanner.close();
+		
+		metode.ubaciUtabeluKursevi(imeKursa, cena);
 	}
 }
