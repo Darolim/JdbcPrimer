@@ -21,8 +21,8 @@ public class Kurs {
 	public int getCena() {
 		return cena;
 	}
-	public void setCena(int cena) {
-		this.cena = cena;
+	public void setCena(double d) {
+		this.cena = d;
 	}
 
 	
