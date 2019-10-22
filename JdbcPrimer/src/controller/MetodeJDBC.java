@@ -3,6 +3,7 @@ package controller;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -89,9 +90,55 @@ public class MetodeJDBC {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
-		
-		
+		}		
 	}
 	
+	public void prikaziSveKurseve () {
+		
+		Connection konekcija=null;
+		PreparedStatement pst=null;
+		ResultSet res=null;
+		
+		try {
+			konekcija=uspostavikonekciju("kursevi");
+			System.out.println("Konekcija je uspostavljena");
+			
+			String query="SELECT * FROM courses";
+			pst=konekcija.prepareStatement(query);
+			
+			res= pst.executeQuery();
+			
+			while(res.next()) {
+				
+				int id= res.getInt("id_courses");
+				String ime= res.getString("ime_kursa");
+				double cena= res.getDouble("cena");
+				
+			System.out.println(id+" "+ime+" "+cena);	
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("Došlo je do greške. Konekcija nije uspostavljena");
+		} finally {
+			try {
+				res.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				pst.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}try {
+				konekcija.close();
+				System.out.println("Uspešno zatvorena konekcija");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.err.println("Došlo je do greške prilikom zatvaranja konekcije");
+			}
+		}
+		
+	}
 }

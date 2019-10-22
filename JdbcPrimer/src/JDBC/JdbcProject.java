@@ -10,16 +10,6 @@ public class JdbcProject {
 		
 		MetodeJDBC metode=new MetodeJDBC();
 		
-		Scanner scanner=new Scanner(System.in);
-		
-		System.out.println("Unesite ime kursa: ");
-		String imeKursa=scanner.nextLine();
-		
-		System.out.println("Unesite cenu kursa: ");
-		String cena=scanner.nextLine();
-		
-		scanner.close();
-		
-		metode.ubaciUtabeluKursevi(imeKursa, cena);
+		metode.prikaziSveKurseve();
 	}
 }
