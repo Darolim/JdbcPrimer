@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import Model.Kurs;
+
 public class MetodeJDBC {
 
 	
@@ -120,6 +122,66 @@ public class MetodeJDBC {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.err.println("Došlo je do greške. Konekcija nije uspostavljena");
+		} finally {
+			try {
+				res.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				pst.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}try {
+				konekcija.close();
+				System.out.println("Uspešno zatvorena konekcija");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.err.println("Došlo je do greške prilikom zatvaranja konekcije");
+			}
+		}
+		
+	}
+	
+	public Kurs vratiKursPoId (int id) {
+		
+		Connection konekcija=null;
+		PreparedStatement pst=null;
+		ResultSet res=null;
+		
+		Kurs kurs=new Kurs();
+				
+		try {
+			konekcija=uspostavikonekciju("kursevi");
+			System.out.println("Konekcija je uspostavljena");
+			
+			String query="SELECT * FROM courses WHERE id_courses = ?";
+			pst=konekcija.prepareStatement(query);
+				pst.setInt(1, id);
+				
+			res= pst.executeQuery();
+			
+			while(res.next()) {
+				
+				/*
+				int idKursa= res.getInt("id_courses");
+				kurs.setIdKursa(idKursa);
+				String ime= res.getString("ime_kursa");
+				double cena= res.getDouble("cena");
+				*/
+				
+				kurs.setIdKursa(res.getInt("id_courses"));
+				kurs.setImeKursa(res.getString("ime_kursa"));
+				kurs.setCena(res.getDouble("cena"));
+				
+			}
+			
+			Return Kurs;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Return null;
 			System.err.println("Došlo je do greške. Konekcija nije uspostavljena");
 		} finally {
 			try {
