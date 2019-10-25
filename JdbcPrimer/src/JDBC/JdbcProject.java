@@ -3,6 +3,7 @@ package JDBC;
 import java.util.Scanner;
 
 import Model.Kurs;
+import Model.User;
 import controller.MetodeJDBC;
 
 public class JdbcProject {
@@ -11,10 +12,20 @@ public class JdbcProject {
 		
 		MetodeJDBC metode = new MetodeJDBC();
 		
-		Kurs k = metode.vratiKursPoId(3);
+		Scanner ucitaj=new Scanner(System.in);
+		System.out.println("Unesite ID");
+		String ID=ucitaj.nextLine();
+				
+		User user = metode.VratiUseraPoId(Integer.parseInt(ID));
 		
-		System.out.println("Id: " + k.getIdKursa());
-		System.out.println("Ime: " + k.getImeKursa());
-		System.out.println("Cena: " + k.getCena());
+		if(user.getIDUser() !=0) {
+		System.out.println("ID: "+user.getIDUser());
+		System.out.println("Ime i prezime: "+user.getUserName());
+		System.out.println("Password: "+user.getPassword());
+		System.out.println("Matični broj: "+user.getMaticniBroj());
+		
+}else {
+	System.out.println("Sistem nije pronašao traženi ID");
+}
 }
 }

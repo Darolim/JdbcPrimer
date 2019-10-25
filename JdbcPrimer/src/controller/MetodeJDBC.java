@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import Model.Kurs;
+import Model.User;
 
 public class MetodeJDBC {
 
@@ -64,6 +65,8 @@ public class MetodeJDBC {
 		}
 	}
 	
+	// izmena podataka u tabeli
+	
 	public boolean izmeniCenuKursa(String ime_Kursa, int cena) {
 		
 		Connection konekcija=null;
@@ -94,6 +97,8 @@ public class MetodeJDBC {
 			}
 		}		
 	}
+	
+	// Dodeljivanje podataka definisanim promenljivima
 	
 	public void prikaziSveKurseve () {
 		
@@ -200,7 +205,65 @@ public class MetodeJDBC {
 				e.printStackTrace();
 				System.err.println("Došlo je do greške prilikom zatvaranja konekcije");
 			}
-		}
+		}		
+	}
+
+	public User VratiUseraPoId (int ID) {
+				
+		Connection konekcija=null;
+		PreparedStatement pst=null;
+		ResultSet res=null;
 		
+		User user=new User();
+		
+		try {
+			
+			konekcija=uspostavikonekciju("kursevi");
+			System.out.println("Konekcija uspešno uspostavljena");
+			
+			String querry="SELECT * FROM users WHERE id_users =?";
+			
+			pst=konekcija.prepareStatement(querry);
+				pst.setInt(1, ID);
+			
+			res=pst.executeQuery();
+			
+			//mapiranje klase
+			
+			while(res.next()) {
+				user.setIDUser(res.getInt("id_users"));
+				user.setUserName(res.getString("username"));
+				user.setPassword(res.getString("password"));
+				user.setMaticniBroj(res.getInt("mat_br"));
+			}
+			
+			return user;
+			
+		} catch (SQLException e) {
+	
+			e.printStackTrace();
+			System.err.println("Došlo je do greške. Konekcija nije uspostavljena");
+			return null;
+			
+		} finally {
+			
+			try {
+				res.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				pst.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				konekcija.close();
+				System.out.println("Konekcija je uspešno zatvorena");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.err.println("Došlo je do greške. Konekcija nije zatvorena.");
+			}
+		}		
 	}
 }
