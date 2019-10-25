@@ -9,12 +9,12 @@ public class JdbcProject {
 
 	public static void main(String[] args) {
 		
-		MetodeJDBC metode=new MetodeJDBC();
+		MetodeJDBC metode = new MetodeJDBC();
 		
-		Kurs k=metode.vratiKursPoId(3);
+		Kurs k = metode.vratiKursPoId(3);
 		
-		System.out.println("ID "+k.getIdKursa());
-		System.out.println("Ime "+k.getImeKursa());
-		System.out.println("Cena"+k.getCena());
-	}
+		System.out.println("Id: " + k.getIdKursa());
+		System.out.println("Ime: " + k.getImeKursa());
+		System.out.println("Cena: " + k.getCena());
+}
 }

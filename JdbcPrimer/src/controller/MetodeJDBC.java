@@ -177,12 +177,12 @@ public class MetodeJDBC {
 				
 			}
 			
-			Return Kurs;
+			return kurs;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			Return null;
 			System.err.println("Došlo je do greške. Konekcija nije uspostavljena");
+			return null;
 		} finally {
 			try {
 				res.close();
